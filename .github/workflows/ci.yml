@@ -10,6 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # On pull_request events, actions/checkout defaults to a refs/pull/N/merge
+          # commit whose message is "Merge <sha> into <sha>" — which has no work-item
+          # ID and breaks the commit-msg check below. Always check out the actual
+          # head commit instead.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -33,7 +39,16 @@ jobs:
       - name: Commit-msg work-item check (last commit only)
         run: |
           msg="$(git log -1 --pretty=%B)"
+          # Exempt template-instantiation commits — GitHub's "Use this template"
+          # generates an "Initial commit" with no work-item ID, and ZIP-download
+          # users may also land on a similar bootstrap commit before they start
+          # actual work. The rule kicks in from the second commit onward.
+          if echo "$msg" | grep -qE '^Initial commit( from |$)'; then
+            echo "First commit (template instantiation) — exempt from work-item check."
+            exit 0
+          fi
           echo "$msg" | grep -qE '(REQ|TASK|FB|INC|CR|DEC)-[0-9]+' || {
             echo "ERROR: last commit message lacks work-item ID"
+            echo "Message was: $msg"
             exit 1
           }
