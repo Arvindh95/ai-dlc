@@ -8,6 +8,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · SemVer · da
 
 _(In-progress changes since last tag — promote to a version when shipping.)_
 
+## [1.0.1] — 2026-05-26
+
+### Fixed
+- CI work-item-ID check (`.github/workflows/ci.yml`) and local commit-msg hook (`.githooks/commit-msg`) now exempt the template-instantiation commit. GitHub's "Use this template" generates an `Initial commit` message with no work-item ID, which previously failed CI on every fresh repo. The exemption matches `Initial commit` exactly or `Initial commit from <template>` prefix. Rule kicks in from the second commit onward — actual development commits still require a work-item ID.
+
 ## [1.0.0] — 2026-05-26
 
 Initial template release. Built from AI-DLC Playbook v1.0.

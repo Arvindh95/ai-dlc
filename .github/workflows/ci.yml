@@ -33,7 +33,16 @@ jobs:
       - name: Commit-msg work-item check (last commit only)
         run: |
           msg="$(git log -1 --pretty=%B)"
+          # Exempt template-instantiation commits — GitHub's "Use this template"
+          # generates an "Initial commit" with no work-item ID, and ZIP-download
+          # users may also land on a similar bootstrap commit before they start
+          # actual work. The rule kicks in from the second commit onward.
+          if echo "$msg" | grep -qE '^Initial commit( from |$)'; then
+            echo "First commit (template instantiation) — exempt from work-item check."
+            exit 0
+          fi
           echo "$msg" | grep -qE '(REQ|TASK|FB|INC|CR|DEC)-[0-9]+' || {
             echo "ERROR: last commit message lacks work-item ID"
+            echo "Message was: $msg"
             exit 1
           }
