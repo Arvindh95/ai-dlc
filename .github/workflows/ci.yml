@@ -10,6 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # On pull_request events, actions/checkout defaults to a refs/pull/N/merge
+          # commit whose message is "Merge <sha> into <sha>" — which has no work-item
+          # ID and breaks the commit-msg check below. Always check out the actual
+          # head commit instead.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'

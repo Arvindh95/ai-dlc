@@ -12,6 +12,7 @@ _(In-progress changes since last tag — promote to a version when shipping.)_
 
 ### Fixed
 - CI work-item-ID check (`.github/workflows/ci.yml`) and local commit-msg hook (`.githooks/commit-msg`) now exempt the template-instantiation commit. GitHub's "Use this template" generates an `Initial commit` message with no work-item ID, which previously failed CI on every fresh repo. The exemption matches `Initial commit` exactly or `Initial commit from <template>` prefix. Rule kicks in from the second commit onward — actual development commits still require a work-item ID.
+- `actions/checkout@v4` now uses `ref: ${{ github.event.pull_request.head.sha || github.sha }}` so PR runs check the actual head commit instead of the synthetic `Merge <sha> into <sha>` merge commit, which has no work-item ID and would otherwise fail the commit-msg check on every PR.
 
 ## [1.0.0] — 2026-05-26
 
