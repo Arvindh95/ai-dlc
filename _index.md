@@ -75,6 +75,7 @@ ai_navigation_hint: |
 
 | File | ID | Title | Status | Owner | Updated |
 |------|----|----|--------|-------|---------|
+| [AI-DLC-Playbook.md](AI-DLC-Playbook.md) | - | AI-DLC-Playbook | - | - | - |
 | [CHANGELOG.md](CHANGELOG.md) | - | CHANGELOG | - | - | - |
 | [CLAUDE.md](CLAUDE.md) | - | CLAUDE | - | - | - |
 | [KICKOFF.md](KICKOFF.md) | - | KICKOFF | - | - | - |

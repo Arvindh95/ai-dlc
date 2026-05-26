@@ -50,4 +50,4 @@ git status   # should be clean
 
 ## Canonical playbook
 
-Full spec: `../Project-Management-Master/AI-DLC-Playbook.md` (~3,870 lines, see §3.2 for the convention, Appendix A for scripts).
+Full spec: `AI-DLC-Playbook.md` at this repo root (~3,870 lines, see §3.2 for the convention, Appendix A for scripts).

@@ -43,4 +43,4 @@ Until kickoff is complete, `project_id`, `client`, owner names and contract date
 
 The template is **maintained as its own repo**; existing projects do NOT auto-update when the template is enhanced. See `CHANGELOG.md` for version history. To adopt later improvements into an existing project, manually diff against the new template version and port the changes you want.
 
-Built from AI-DLC Playbook v1.0 — `../Project-Management-Master/AI-DLC-Playbook.md`.
+Built from AI-DLC Playbook v1.0 — see `AI-DLC-Playbook.md` at the repo root for the full canonical spec (~3,870 lines).

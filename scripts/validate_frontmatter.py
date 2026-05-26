@@ -57,6 +57,7 @@ SKIP_FILES = {
     "drift-report.md",
     "vision.md", "scope.md", "stakeholders.md", "glossary.md",
     "teams.md", "security.md", "ai-config.md",
+    "AI-DLC-Playbook.md",
 }
 
 def classify(file_path):
