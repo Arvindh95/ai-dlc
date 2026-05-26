@@ -1,0 +1,39 @@
+name: AI-DLC CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install pyyaml
+
+      - name: Validate record frontmatter
+        run: python scripts/validate_frontmatter.py .
+
+      - name: Regenerate _index.md catalogs
+        run: python scripts/regen_indexes.py .
+
+      - name: Fail if _index.md out of date
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "ERROR: _index.md files are out of date. Run 'python scripts/regen_indexes.py .' locally and commit."
+            git diff
+            exit 1
+          fi
+
+      - name: Commit-msg work-item check (last commit only)
+        run: |
+          msg="$(git log -1 --pretty=%B)"
+          echo "$msg" | grep -qE '(REQ|TASK|FB|INC|CR|DEC)-[0-9]+' || {
+            echo "ERROR: last commit message lacks work-item ID"
+            exit 1
+          }

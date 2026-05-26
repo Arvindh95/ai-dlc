@@ -1,0 +1,6 @@
+#!/bin/sh
+# Require every commit to cite at least one work-item ID
+if ! grep -qE '(REQ|TASK|FB|INC|CR|DEC)-[0-9]+' "$1"; then
+    echo "ERROR: commit message must reference at least one work-item ID (REQ/TASK/FB/INC/CR/DEC)"
+    exit 1
+fi

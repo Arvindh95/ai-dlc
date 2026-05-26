@@ -1,0 +1,30 @@
+# Generated
+dashboard/exports/
+dashboard/snapshots/
+_generated/
+cache/
+tmp/
+
+# Tool-managed
+.obsidian/workspace*
+.obsidian/cache
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets
+.env
+.env.local
+*.key
+*.pem
