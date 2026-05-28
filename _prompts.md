@@ -41,6 +41,13 @@ You are at the project root. Your job is to **route** the request to the right T
 - **Output:** Report of broken refs
 - **Inline summary:** For each approved REQ, verify spec_ref, design_ref, tasks, test_ref resolve. Report to `dashboard/drift-report.md`.
 
+## OP-4: Next-steps walkthrough (post-kickoff or return-from-break)
+- **Trigger phrases:** "what next", "what now", "next steps", "post-kickoff guide", "what should I do", "where do we stand", "orient me"
+- **Canonical prompt:** `prompts/next-steps.md`
+- **Inputs:** Current repo state (root `_index.md`, sprint status, REQ counts, INBOX, risks, CRs)
+- **Output:** Stage diagnosis + ranked top 3-5 next moves with trigger phrases + hygiene reminder
+- **Inline summary:** Diagnose stage (A fresh post-kickoff / B mid-plan / C in-sprint / D close / E returning). Surface 3-5 ranked next moves with WHAT/TRIGGER/WHY. End with cross-cutting hygiene (feedback triage, risk review, KRISA fills). Don't auto-execute — orient and exit.
+
 ## Forbidden in this folder
 - Do NOT create record MDs (REQ/TASK/FB) at root — they belong in their folder
 - Do NOT edit auto-managed region of `_index.md`

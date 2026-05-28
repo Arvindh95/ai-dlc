@@ -17,7 +17,7 @@ TIER_A_PATTERNS = [
     "requirements", "spec", "design", "tasks", "feedback",
     "decisions", "incidents", "prompts", "deliverables",
     "dashboard", "raw-inputs", "signoffs", "change-requests",
-    "00-overview", "adrs",
+    "00-overview", "adrs", "risks",
 ]
 
 TIER_B_PATTERNS = [

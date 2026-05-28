@@ -31,7 +31,7 @@ Read `_index.md` first, then match the user's request to one of the OPs below by
 - **Canonical prompt:** _(inline only)_
 - **Inputs:** Changed REQ-ID + affected D-docs
 - **Output:** Updated sections + new footer hash
-- **Inline summary:** [PLANNED v1.1 automation; today: manual] Re-fill sections that cite changed REQ-ID. Update footer hash.
+- **Inline summary:** [PLANNED v1.2 automation; today: manual] Re-fill sections that cite changed REQ-ID. Update footer hash.
 
 ## Forbidden in this folder
 - Do NOT fill KRISA from a draft (unapproved) REQ

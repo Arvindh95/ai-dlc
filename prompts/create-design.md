@@ -1,9 +1,9 @@
 ---
 id: PROMPT-05
 name: Create design from approved spec
-version: 0.1.0
+version: 0.2.0
 status: active
-last_updated: 2026-05-26
+last_updated: 2026-05-28
 used_by:
   - design/_prompts.md OP-1
 ---
@@ -26,7 +26,7 @@ You are designing the implementation of SPEC-NN-<DOMAIN>.
 
 1. Read the spec in full.
 2. Read 00-overview/security.md for compliance constraints.
-3. Read 00-overview/ai-config.md for tech-stack defaults.
+3. Read 00-overview/tech.md for target stack (frontend/backend/DB/hosting) + environments.
 4. Read design/architecture.md (if exists) for current architecture.
 
 Create design/<DOMAIN>-design.md with:

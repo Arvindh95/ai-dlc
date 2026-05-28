@@ -1,17 +1,18 @@
 ---
-folder: sprint-01
-purpose: "Sprint 01 tasks."
+folder: sprint-template
+purpose: "Template — copy to sprint-NN/ when planning a new sprint. Substitute {{SPRINT_NN}}."
 owner: "Tech Lead"
 file_naming: "TASK-NNN-short-kebab-title.md"
-last_updated: 2026-05-26
+last_updated: 2026-05-28
 ai_navigation_hint: |
-  Sprint 01. Read frontmatter for goal + dates. See retro link at sprint close.
+  This is the sprint scaffold template. Do NOT add real tasks here. When opening
+  a new sprint, copy this folder to sprint-NN/ and replace {{SPRINT_NN}} tokens.
 ---
 
-# Index — sprint-01/
+# Index — {{SPRINT_NN}}/
 
 ## Purpose
-Sprint 01 tasks.
+{{SPRINT_NN}} tasks.
 
 ## File naming
 TASK-NNN-short-kebab-title.md
@@ -37,7 +38,7 @@ _(auto-generated below — do not edit by hand)_
 
 ## Related folders
 - `../`
-- `../../feedback/sprint-01/`
+- `../../feedback/{{SPRINT_NN}}/`
 
 ## Common questions
 - **Sprint goal?** → see Sprint Goals section below

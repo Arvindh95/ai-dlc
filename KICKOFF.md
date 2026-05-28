@@ -29,14 +29,18 @@ Open `_index.md` at the root. In the frontmatter, replace these `TBD-set-at-kick
 
 ## Step 3 — Fill `00-overview/`
 
-Five files, ~15 min total:
+Seven files, ~30 min total:
 
 - [ ] `vision.md` — one paragraph, what success looks like + headline non-scope item
 - [ ] `scope.md` — in-scope / out-of-scope / assumptions / constraints
-- [ ] `stakeholders.md` — real names + emails + comms cadence
+- [ ] `stakeholders.md` — 5 stakeholder rows (Sponsor, BO, IT Lead, DPO, Account Manager) + comms channels
 - [ ] `teams.md` — **single source of truth for names**. Map PM / BA Lead / Tech Lead / Devs → real people
 - [ ] `security.md` — data classification, DPO contact, compliance frameworks
+- [ ] `cadence.md` — sprint length, total sprints, working week, ceremony schedule
+- [ ] `tech.md` — code repo URL, target stack, environments
 - [ ] `ai-config.md` — already filled with Censof defaults; only edit if model strategy changes
+
+Plus seed `risks/` with 3-5 RISK-NNN records.
 
 > All other `_index.md` files refer to **role labels** (`owner: PM`, `owner: BA Lead`, `owner: Tech Lead`) — they don't need name updates. Names live only in `teams.md`.
 
@@ -112,10 +116,13 @@ If anything still shows, fill it before sprint-01 starts.
 - [ ] No `TBD-set-at-kickoff` strings anywhere in the repo (except this `KICKOFF.md` itself)
 - [ ] `teams.md` has real names for PM, BA Lead, Tech Lead
 - [ ] `vision.md` has actual vision text (not example block)
-- [ ] `stakeholders.md` has at least Sponsor + Business Owner with real emails
+- [ ] `stakeholders.md` has all 5 default rows filled + Approver-of + Communication channels section
 - [ ] `security.md` has DPO contact + data classification table filled
+- [ ] `cadence.md` has sprint length + ceremony schedule filled
+- [ ] `tech.md` has code repo URL + stack table + environments table filled
+- [ ] `risks/` has 3-5 RISK-NNN-*.md seed records
 - [ ] First sprint folder has goal + dates
 - [ ] Both validators pass
 - [ ] First commit landed with a work-item ID
 
-When all ten boxes are checked, the template is **instantiated** and ready for sprint-01.
+When all boxes are checked, the template is **instantiated** and ready for sprint-01.

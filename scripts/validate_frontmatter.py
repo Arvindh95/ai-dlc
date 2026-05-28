@@ -15,6 +15,7 @@ REQUIRED_FIELDS = {
     "incidents":       ["id", "date", "severity", "incident_commander", "data_loss", "data_breach", "status"],
     "change-requests": ["id", "type", "raised_by", "raised_date", "affects_req", "status"],
     "raw-inputs":      ["id", "source_type", "source_date", "captured_by", "status"],
+    "risks":           ["id", "title", "raised_date", "raised_by", "likelihood", "impact", "status", "owner"],
 }
 
 CONDITIONAL_REQUIRED = {
@@ -32,6 +33,9 @@ CONDITIONAL_REQUIRED = {
         ("generated_reqs", lambda fm: fm.get("status") in
             ["partially-processed", "fully-processed"]),
     ],
+    "risks": [
+        ("linked_inc", lambda fm: fm.get("status") == "materialised"),
+    ],
 }
 
 STATUS_VALUES = {
@@ -46,6 +50,7 @@ STATUS_VALUES = {
     "incidents":       ["open", "mitigated", "resolved", "postmortem-pending", "closed"],
     "change-requests": ["under-review", "approved", "rejected", "deferred"],
     "raw-inputs":      ["unprocessed", "partially-processed", "fully-processed", "superseded"],
+    "risks":           ["open", "mitigated", "accepted", "closed", "materialised"],
 }
 
 SKIP_FILES = {
@@ -56,7 +61,7 @@ SKIP_FILES = {
     "dashboard.md", "velocity.md", "sprint-board.md", "ops-daily.md",
     "drift-report.md",
     "vision.md", "scope.md", "stakeholders.md", "glossary.md",
-    "teams.md", "security.md", "ai-config.md",
+    "teams.md", "security.md", "ai-config.md", "cadence.md", "tech.md",
     "AI-DLC-Playbook.md",
 }
 
@@ -96,11 +101,36 @@ def validate(file_path):
 
     return errors
 
+def check_duplicate_ids(root):
+    """Global ID uniqueness — catches collisions even in unclassified files (e.g. prompts/)."""
+    seen = {}
+    errors = []
+    for md_file in root.rglob("*.md"):
+        if md_file.name in SKIP_FILES:
+            continue
+        content = md_file.read_text(encoding="utf-8")
+        m = re.match(r"^---\n(.*?)\n---", content, re.DOTALL)
+        if not m:
+            continue
+        try:
+            fm = yaml.safe_load(m.group(1)) or {}
+        except yaml.YAMLError:
+            continue
+        rec_id = fm.get("id")
+        if not rec_id:
+            continue
+        if rec_id in seen:
+            errors.append(f"{md_file}: duplicate id '{rec_id}' (also in {seen[rec_id]})")
+        else:
+            seen[rec_id] = str(md_file)
+    return errors
+
 if __name__ == "__main__":
     root = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
     all_errors = []
     for md_file in root.rglob("*.md"):
         all_errors.extend(validate(md_file))
+    all_errors.extend(check_duplicate_ids(root))
     for err in all_errors:
         print(err)
     sys.exit(1 if all_errors else 0)

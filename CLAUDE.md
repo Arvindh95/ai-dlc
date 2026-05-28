@@ -1,6 +1,6 @@
 # CLAUDE.md — Session bootstrap
 
-This repo is an **AI-DLC source-of-truth requirements repo** (not a code repo). Built from AI-DLC Playbook v1.0.
+This repo is an **AI-DLC source-of-truth requirements repo** (not a code repo). Built from AI-DLC Playbook v1.1.
 
 ## Mandatory first reads (in order)
 
@@ -13,9 +13,13 @@ Before doing **any** work in this repo, read these four files. Skipping this ste
 
 Total: ~6k tokens. Replaces ~30k tokens of blind exploration.
 
+## Auto-kickoff on uninitialised template
+
+If root `_index.md` shows `project_id: TBD-set-at-kickoff`, this repo is an uninitialised template. **Immediately invoke `prompts/kickoff.md` (root `_prompts.md` OP-0) and start asking the kickoff questions.** Do not wait for a separate "run kickoff" command. Refuse all other operations (REQ creation, sprint planning, etc.) until kickoff DoD is met.
+
 ## Tier policy (3.2.0)
 
-- **Tier A** (managed knowledge): `requirements/`, `spec/`, `design/`, `tasks/`, `feedback/`, `decisions/`, `incidents/`, `prompts/`, `deliverables/`, `dashboard/`, `raw-inputs/`, `signoffs/`, `change-requests/`, `00-overview/`, `adrs/`, repo root. **Both `_index.md` + `_prompts.md` mandatory.**
+- **Tier A** (managed knowledge): `requirements/`, `spec/`, `design/`, `design/adrs/`, `tasks/`, `feedback/`, `decisions/`, `incidents/`, `prompts/`, `deliverables/`, `dashboard/`, `raw-inputs/`, `signoffs/`, `change-requests/`, `risks/`, `00-overview/`, repo root. **Both `_index.md` + `_prompts.md` mandatory.**
 - **Tier B** (code/infra/scripts): `_index.md` mandatory, `_prompts.md` only if folder has real ops.
 - **Tier C** (tool-managed, generated): exempt. See `SKIP_DIRS` in `scripts/regen_indexes.py`.
 

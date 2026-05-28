@@ -6,7 +6,26 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · SemVer · da
 
 ## [Unreleased]
 
-_(In-progress changes since last tag — promote to a version when shipping.)_
+### Added
+- `risks/` — new Tier A folder: project risk register (RISK-NNN records) with 5 ops (add, update-status, escalate, link-to-incident, seed-at-kickoff). Schema + status enum + conditional `linked_inc` added to `validate_frontmatter.py`; `risks` added to `TIER_A_PATTERNS` in `regen_indexes.py`.
+- `raw-inputs/legacy-system/` — migration-project support: capture legacy artifact → build inventory (cited to line ranges) → extract REQs (two-step). Extended `source_type` enum (code, schema, api-spec, db-erd, ui-mockup, user-manual) + `artifact_ref` field.
+- `00-overview/cadence.md` — sprint length, total sprints, working week, ceremony schedule.
+- `00-overview/tech.md` — code repo URL, target stack, environments.
+- `00-overview/stakeholders.md` — Communication channels section.
+- `tasks/sprint-template/` + `feedback/sprint-template/` — `{{SPRINT_NN}}` scaffolds copied by sprint-plan OP-1 so new sprints always have `_index.md` + `_prompts.md`.
+- `prompts/next-steps.md` (PROMPT-13) + ROOT `_prompts.md` OP-4 — post-kickoff / return orientation.
+- Task frontmatter `design_ref` field (TASK → design traceability); drift check verifies it.
+- `CLAUDE.md` — auto-kickoff trigger on `project_id: TBD-set-at-kickoff`.
+
+### Changed
+- `prompts/kickoff.md` v0.1.0 → v0.5.0 (37 steps, full DoD coverage + post-kickoff handoff).
+- `prompts/req-check.md` v0.1.0 → v0.2.0 (reverse task→design traceability).
+- `KICKOFF.md` — Step 3 lists 7 overview files + risks seed; DoD adds tech + risks + stakeholders rows.
+
+### Fixed
+- `CLAUDE.md` Tier A list: corrected `adrs/` → `design/adrs/` (actual nested path) and added `risks/`.
+- Duplicate `PROMPT-01` ID collision: `next-steps.md` renumbered to PROMPT-13.
+- `validate_frontmatter.py` SKIP_FILES: added `cadence.md`, `tech.md`.
 
 ## [1.0.1] — 2026-05-26
 

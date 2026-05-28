@@ -1,9 +1,29 @@
 # AI-Assisted Development Lifecycle (AI-DLC) Playbook
 
-**Version:** 1.0
+**Version:** 1.1
 **Owner:** Arvindh / Censof
-**Last updated:** 2026-05-26
+**Last updated:** 2026-05-28
 **Status:** Living document — update after every project retro
+
+---
+
+## Revision history
+
+### v1.1 — 2026-05-28
+Structural additions (template + playbook now aligned):
+- **`risks/`** — new Tier A folder: project risk register (RISK-NNN records, lifecycle ops). New record type — schema in §3.6.
+- **`raw-inputs/legacy-system/`** — migration-project support: capture legacy artifact → build inventory (cited) → extract REQs. Extended `source_type` enum + `artifact_ref` — see §3.7.
+- **`00-overview/cadence.md`** — sprint length, total sprints, working week, ceremony schedule.
+- **`00-overview/tech.md`** — code repo URL, target stack, environments (now the canonical stack source for `create-design`, replacing the old `ai-config.md` reference).
+- **`tasks/sprint-template/` + `feedback/sprint-template/`** — `{{SPRINT_NN}}` scaffolds cloned by sprint-plan so every new sprint carries `_index.md` + `_prompts.md`.
+- **`prompts/next-steps.md`** (PROMPT-13) + root `_prompts.md` OP-4 — post-kickoff / return-from-break orientation.
+- Task `design_ref` enforced end-to-end (schema + create-tasks-from-req + drift check).
+- `CLAUDE.md` auto-kickoff trigger on `project_id: TBD-set-at-kickoff`; validator global ID-uniqueness check.
+
+Deferred to **v1.2** (tagged `[PLANNED v1.2]` in-text): KRISA staleness detector, cross-link validator, status-transition validator, KRISA footer↔commit comparator, `00-overview/folder-tiers.yml` externalization, nightly dashboard snapshots, and the code→MD auto-sync suite (auto-close TASK on PR merge, REQ↔test coverage map, REQ readiness auto-propose, design↔code drift detection).
+
+### v1.0 — 2026-05-26
+Initial playbook. 28-folder Tier A/B/C structure, `_index.md` + `_prompts.md` convention, 10 record types, 13 canonical prompts.
 
 ---
 
@@ -91,7 +111,7 @@ The playbook mixes three voices, and the reader must always know which one is ta
 
 Where a section mixes voices, the dominant voice is named at section start, and other voices are inline-tagged. Sections without a tag are `[POLICY]`.
 
-Current `[PLANNED v1.1]` items (to implement before v1.1 ships):
+Current `[PLANNED v1.2]` items (deferred from the v1.1 structural release; to implement before v1.2 ships):
 
 - KRISA staleness detector (Appendix A.2 — stub today)
 - Cross-link validator (mentioned in 6.2 — partial today)
@@ -105,7 +125,7 @@ Current `[PLANNED v1.1]` items (to implement before v1.1 ships):
   - Auto-propose REQ `ready-for-acceptance` when all tasks done + tests passing (Appendix A.7 — stub)
   - Design ↔ code drift detection via Graphify (Appendix A.8 — stub)
 
-Until these land, the corresponding workflows are **manual**, and that is acceptable for v1.0. Calling them out prevents the reader from assuming automated enforcement that does not exist.
+Until these land, the corresponding workflows are **manual**, and that is acceptable through v1.1. Calling them out prevents the reader from assuming automated enforcement that does not exist.
 
 ### 1.10 Iterate the playbook
 
@@ -226,10 +246,12 @@ project-x-requirements/
 │   ├── _prompts.md
 │   ├── vision.md
 │   ├── scope.md
-│   ├── stakeholders.md
+│   ├── stakeholders.md             # + Communication channels section (v1.1)
 │   ├── glossary.md
 │   ├── teams.md
 │   ├── security.md
+│   ├── cadence.md                  # (v1.1) Sprint length, working week, ceremonies
+│   ├── tech.md                     # (v1.1) Code repo URL, target stack, environments
 │   └── ai-config.md                # Model pinning, AI tiers
 ├── requirements/
 │   ├── _index.md                   # REQ-ID range, status taxonomy, frontmatter schema
@@ -259,10 +281,13 @@ project-x-requirements/
 │   ├── _index.md
 │   ├── _prompts.md                 # OPs: sprint-plan, create-tasks-from-REQ, assign
 │   ├── backlog.md
+│   ├── sprint-template/            # (v1.1) {{SPRINT_NN}} scaffold cloned by sprint-plan
+│   │   ├── _index.md
+│   │   └── _prompts.md
 │   ├── sprint-01/
 │   │   ├── _index.md
 │   │   ├── _prompts.md             # OPs: sprint-open, sprint-close, burndown, carry-over
-│   │   ├── TASK-001-implement-login.md
+│   │   ├── TASK-001-implement-login.md   # frontmatter: req_ref + design_ref
 │   │   └── ...
 │   └── sprint-02/
 │       ├── _index.md
@@ -271,12 +296,20 @@ project-x-requirements/
 │   ├── _index.md
 │   ├── _prompts.md                 # OPs: triage-INBOX, classify, route, escalate
 │   ├── INBOX.md
+│   ├── sprint-template/            # (v1.1) {{SPRINT_NN}} scaffold cloned by sprint-plan
+│   │   ├── _index.md
+│   │   └── _prompts.md
 │   ├── sprint-01/
 │   │   ├── _index.md
 │   │   ├── _prompts.md             # OPs: retro-draft, feedback-metrics
 │   │   ├── FB-001-login-error.md
 │   │   └── retro.md
 │   └── sprint-02/
+├── risks/                          # (v1.1) Project risk register (Tier A)
+│   ├── _index.md
+│   ├── _prompts.md                 # OPs: add, update-status, escalate, link-to-incident, seed-at-kickoff
+│   ├── RISK-001-client-ba-bandwidth.md
+│   └── ...
 ├── change-requests/
 │   ├── _index.md
 │   ├── _prompts.md                 # OPs: draft-CR, approve-CR, reject-CR, link-to-REQ-revision
@@ -292,6 +325,8 @@ project-x-requirements/
 ├── prompts/
 │   ├── _index.md                   # Prompt library map, when-to-use each
 │   ├── _prompts.md                 # OPs: add-new-prompt, version-bump, deprecate
+│   ├── kickoff.md                  # PROMPT-00
+│   ├── next-steps.md               # PROMPT-13 (v1.1) post-kickoff / return orientation
 │   ├── fill-srs-section.md
 │   ├── triage-feedback.md
 │   └── CHANGELOG.md
@@ -318,9 +353,14 @@ project-x-requirements/
 │   ├── client-emails/
 │   │   ├── _index.md
 │   │   └── _prompts.md
-│   └── client-docs/
+│   ├── client-docs/
+│   │   ├── _index.md
+│   │   └── _prompts.md
+│   └── legacy-system/              # (v1.1) Migration: code, SQL schema, API specs, ERDs
 │       ├── _index.md
-│       └── _prompts.md
+│       ├── _prompts.md             # OPs: capture-artifact, build-inventory, extract-REQs
+│       ├── licensing-schema.sql    # original artifact (immutable)
+│       └── RAW-001-licensing-schema.md  # sidecar: frontmatter + inventory
 ├── signoffs/
 │   ├── _index.md
 │   ├── _prompts.md                 # OPs: archive-signoff, cross-ref-REQ
@@ -334,7 +374,7 @@ project-x-requirements/
     ├── ops-daily.md                # Auto-generated daily ops summary (Claude reads logs)
     ├── exports/                    # [Tier C — generated, exempt] HTML snapshots for client viewing
     │   └── index.html
-    ├── snapshots/                  # [Tier C — generated, exempt] [PLANNED v1.1] Nightly metric snapshots (see 7.4 Layer 3)
+    ├── snapshots/                  # [Tier C — generated, exempt] [PLANNED v1.2] Nightly metric snapshots (see 7.4 Layer 3)
     └── queries/
         ├── _index.md
         └── _prompts.md
@@ -357,7 +397,7 @@ Not every folder needs both files. We tier folders by whether they hold managed 
 
 | Tier                                  | Folders                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `_index.md`          | `_prompts.md`                                              | Rationale                                                                                                                                                                                             |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Tier A — Managed knowledge** | `00-overview/`, `requirements/`, `spec/`, `design/`, `tasks/` (and sprint subfolders), `feedback/` (and sprint subfolders), `decisions/`, `incidents/`, `prompts/`, `deliverables/`, `dashboard/`, `raw-inputs/` (and subfolders), `signoffs/`, `change-requests/`, repo roots (requirements-repo, code-repo)                                                                                                                                                                                                            | **Mandatory**    | **Mandatory**                                          | These are the folders AI navigates and operates in. The convention pays for itself here.                                                                                                              |
+| **Tier A — Managed knowledge** | `00-overview/`, `requirements/`, `spec/`, `design/` (and `adrs/`), `tasks/` (and sprint subfolders incl. `sprint-template/`), `feedback/` (and sprint subfolders incl. `sprint-template/`), `decisions/`, `incidents/`, `risks/`, `prompts/`, `deliverables/`, `dashboard/`, `raw-inputs/` (and subfolders incl. `legacy-system/`), `signoffs/`, `change-requests/`, repo roots (requirements-repo, code-repo)                                                                                                                                                                                                            | **Mandatory**    | **Mandatory**                                          | These are the folders AI navigates and operates in. The convention pays for itself here.                                                                                                              |
 | **Tier B — Code/infra**        | `code-repo/services/`, `code-repo/libs/`, `code-repo/infra/`, `code-repo/infra/runbooks/`, `code-repo/infra/alerts/`, `code-repo/tests/`, `code-repo/scripts/`                                                                                                                                                                                                                                                                                                                                                                         | **Mandatory**    | **Optional** (recommended for runbooks, alerts, tests) | Code folders benefit from `_index.md` for AI orientation. `_prompts.md` only when there are real folder-specific operations (e.g., runbooks have lookup/update; pure code folders usually don't). |
 | **Tier C — Exempt**            | **Tool-managed:** `.git/`, `.obsidian/`, `.github/`, `node_modules/`, `__pycache__/`, `.pytest_cache/`, `.mypy_cache/`, `.venv/`, `venv/`, `dist/`, `build/`. **Generated/export subfolders:** `exports/`, `snapshots/`, `cache/`, `_generated/`, `tmp/` (often inside Tier A parents like `dashboard/exports/`). **Plus:** any unknown folder that doesn't match Tier A or Tier B (default — see note below). The full list lives in `SKIP_DIRS` at the top of `scripts/regen_indexes.py`. | **Not required** | **Not required**                                       | Tool-managed, build-generated, or scratch content. Convention adds no value, would create noise.                                                                                                      |
 
@@ -367,12 +407,12 @@ CI fails if a Tier A folder lacks either file or a Tier B folder lacks `_index.m
 
 **Naming-collision pitfall.** `folder_tier()` classifies by **any** path part matching a Tier A or Tier B pattern. So a code folder accidentally named after a Tier A keyword — e.g., `code-repo/services/auth/spec/` (literal `spec` subfolder under an auth service) — will be classified Tier A and forced to carry both `_index.md` and `_prompts.md`. Two ways to avoid this:
 
-1. Don't reuse Tier A/B pattern names (`requirements`, `spec`, `design`, `tasks`, `feedback`, `decisions`, `incidents`, `prompts`, `deliverables`, `dashboard`, `raw-inputs`, `signoffs`, `change-requests`, `00-overview`, `adrs`, `services`, `libs`, `infra`, `runbooks`, `alerts`, `tests`, `scripts`) for unrelated code folders. Prefer `spec_data/`, `specifications/`, etc.
-2. If you must, add the colliding path to a project-specific SKIP entry. The cleanest fix is to extend `SKIP_DIRS` in the project's copy of `regen_indexes.py`. (`[PLANNED v1.1]` will move this into `00-overview/folder-tiers.yml` so projects can override without editing scripts.)
+1. Don't reuse Tier A/B pattern names (`requirements`, `spec`, `design`, `tasks`, `feedback`, `decisions`, `incidents`, `risks`, `prompts`, `deliverables`, `dashboard`, `raw-inputs`, `signoffs`, `change-requests`, `00-overview`, `adrs`, `services`, `libs`, `infra`, `runbooks`, `alerts`, `tests`, `scripts`) for unrelated code folders. Prefer `spec_data/`, `specifications/`, etc.
+2. If you must, add the colliding path to a project-specific SKIP entry. The cleanest fix is to extend `SKIP_DIRS` in the project's copy of `regen_indexes.py`. (`[PLANNED v1.2]` will move this into `00-overview/folder-tiers.yml` so projects can override without editing scripts.)
 
 **Small projects (< 2 sprints, single dev) may opt out of Tier B `_index.md`** by setting `lightweight_mode: true` in the root `_index.md` frontmatter. Tier A is still mandatory regardless of project size — the convention earns its keep on the smallest project.
 
-A missing mandatory file is a CI failure. The validator (`regen_indexes.py`) hardcodes the Tier A/B/C patterns at the top of the script (`TIER_A_PATTERNS`, `TIER_B_PATTERNS`, `SKIP_DIRS`). Project-level overrides — when needed — are done by editing those lists in the project's copy of the script. *(`[PLANNED v1.1]`: externalize to `00-overview/folder-tiers.yml` so projects can override without touching the script.)*
+A missing mandatory file is a CI failure. The validator (`regen_indexes.py`) hardcodes the Tier A/B/C patterns at the top of the script (`TIER_A_PATTERNS`, `TIER_B_PATTERNS`, `SKIP_DIRS`). Project-level overrides — when needed — are done by editing those lists in the project's copy of the script. *(`[PLANNED v1.2]`: externalize to `00-overview/folder-tiers.yml` so projects can override without touching the script.)*
 
 #### 3.2.1 Why this matters (the cost of no index)
 
@@ -524,7 +564,7 @@ client: Client-Name
 contract_start: 2026-04-01
 contract_end: 2026-12-31
 current_sprint: sprint-03
-playbook_version: 1.0
+playbook_version: 1.1
 ai_navigation_hint: |
   Start here. This _index lists every top-level folder and the canonical path
   to answer common questions. Always read this before searching.
@@ -823,7 +863,7 @@ Plain-English description of the requirement, audience: BA and client.
 - Related: [[REQ-041]] (login), [[REQ-043]] (password reset)
 ```
 
-### 3.6 Spec, Design, Task, ADR, DEC, INC, CR — frontmatter templates
+### 3.6 Spec, Design, Task, ADR, DEC, INC, CR, RISK — frontmatter templates
 
 **Spec MD** (`spec/auth-spec.md`):
 
@@ -878,7 +918,7 @@ pr: https://github.com/censof/project-x/pull/234
 created: 2026-05-15
 started: 2026-05-16
 completed: null
-last_updated: 2026-05-22       # v1.0: dev manually bumps on any status/field change. [PLANNED v1.1]: auto-bumped by close-task-on-PR-merge (A.5). Drives stale-task detection.
+last_updated: 2026-05-22       # v1.0: dev manually bumps on any status/field change. [PLANNED v1.2]: auto-bumped by close-task-on-PR-merge (A.5). Drives stale-task detection.
 ---
 ```
 
@@ -956,6 +996,24 @@ schedule_impact: pushes REQ-045 to sprint-04
 
 Body: Description, Justification (from client), Impact analysis, Decision. See 6.6 for the full CR template walk-through.
 
+**RISK MD** (`risks/RISK-001-client-ba-bandwidth.md`) — *(v1.1)*:
+
+```yaml
+---
+id: RISK-001
+title: Client BA bandwidth insufficient for review cadence
+raised_date: 2026-05-28
+raised_by: arvindh
+likelihood: high               # low | medium | high
+impact: high                   # low | medium | high
+status: open                   # open | mitigated | accepted | closed | materialised
+owner: arvindh
+linked_inc: null               # INC-NNN — required when status=materialised
+---
+```
+
+Body sections: Description, Trigger/signal, Mitigation, Contingency, Change Log. Living register — seed 3-5 at kickoff, review each retro. Sev (high×high) escalates to Sponsor at steering. Append-only; closed risks stay in the catalog (never delete, never renumber). A materialised risk links to the incident it became (`linked_inc`), and the validator requires `linked_inc` when `status=materialised`.
+
 ### 3.7 Raw-input MD frontmatter schema
 
 Workshop transcripts, client emails, and source documents in `raw-inputs/` follow this lightweight schema. Raw inputs are immutable source material; they get processed into REQs (see `requirements/_prompts.md` OP-1) but the originals stay as the audit trail.
@@ -964,9 +1022,11 @@ Workshop transcripts, client emails, and source documents in `raw-inputs/` follo
 ---
 id: RAW-001
 source_type: workshop          # workshop | email | document | meeting-note | slack-export | call-transcript | screenshot
+                               # (v1.1) legacy-system also: code | schema | api-spec | db-erd | ui-mockup | user-manual
 source_date: 2026-04-12
 captured_by: ba-rina
 participants: [client-pm, client-tech-lead, arvindh, ba-rina]   # for workshop/meeting; optional otherwise
+artifact_ref: null             # (v1.1) original filename — legacy-system sidecars only (e.g. licensing-schema.sql)
 status: unprocessed            # unprocessed | partially-processed | fully-processed | superseded
 generated_reqs: []             # populated when processed: [REQ-042, REQ-043]
 notes: |
@@ -984,6 +1044,8 @@ notes: |
 - File name: `YYYY-MM-DD-source-description.md` (e.g., `2026-04-12-auth-workshop-transcript.md`).
 - Non-MD originals (`.pdf`, `.eml`, `.mp4`) kept alongside; Claude reads the `.md` companion file extracted from them.
 - `status: fully-processed` is set when the source's content has been fully converted into REQs/Specs/Designs. Validator (A.1) then requires `generated_reqs` to be non-empty.
+
+**Legacy-system inputs (v1.1) — two-step extraction.** For migration projects, source code, SQL schemas, stored procedures, API specs, and ERDs are not natural language — the AI cannot extract REQs from them directly. They go in `raw-inputs/legacy-system/` and follow a two-step flow: (1) the original artifact is kept immutable; a sidecar `RAW-NNN-*.md` records frontmatter + `artifact_ref`; (2) the AI builds an **inventory** in the sidecar (entities, fields, constraints, observed business rules — each cited to artifact line ranges, inferences marked `[inferred]`, gaps `[TBD]`); (3) REQs are then extracted from the inventory, citing both the inventory item and the original artifact line. This preserves the chain REQ → inventory → original artifact. Never extract REQs straight from raw code.
 
 ### 3.8 Glossary
 
@@ -1132,7 +1194,7 @@ Reviewed by: [BA name]
 
 This makes drift detectable: if MD has moved past commit `abc123def`, the Word doc is stale and a re-gen is needed for the changed sections.
 
-### 4.7 Regeneration trigger `[PLANNED v1.1 automation; today: manual]`
+### 4.7 Regeneration trigger `[PLANNED v1.2 automation; today: manual]`
 
 When a REQ changes:
 
@@ -1293,13 +1355,13 @@ These run on every PR. Failure blocks merge.
 | Format                                            | Code formatting                                                                                                                                                                                                       | Prettier / Black / gofmt                                                              |
 | Unit tests                                        | Pass with ≥80% coverage of changed lines                                                                                                                                                                             | pytest / jest / go test                                                               |
 | Integration tests                                 | Pass against real DB (containerized)                                                                                                                                                                                  | Docker compose + test suite                                                           |
-| Frontmatter validation                            | All 10 record MD types (REQ, Task, FB, Spec, Design, ADR, DEC, INC, CR, Raw-input) have type-applicable mandatory + conditional fields, status enum is valid, non-record files (INBOX/backlog/retro/etc.) are skipped | Custom script (Appendix A.1)                                                          |
+| Frontmatter validation                            | All 11 record MD types (REQ, Task, FB, Spec, Design, ADR, DEC, INC, CR, Raw-input, RISK) have type-applicable mandatory + conditional fields, status enum is valid, non-record files (INBOX/backlog/retro/etc.) are skipped; global ID-uniqueness enforced (v1.1) | Custom script (Appendix A.1)                                                          |
 | Work-item ID in commits                           | Every commit message references at least one of: REQ-/TASK-/FB-/INC-/CR-/DEC-ID                                                                                                                                       | Custom Git hook (`.githooks/commit-msg`) + same regex in CI                         |
 | Secret scan                                       | No credentials, API keys, tokens committed                                                                                                                                                                            | GitHub native secret scanning + custom grep in Actions for project-specific patterns  |
 | License scan                                      | No GPL / AGPL contamination                                                                                                                                                                                           | Simple GitHub Actions step listing dep licenses; manual review on PR if new dep added |
-| Frontmatter status transitions `[PLANNED v1.1]` | E.g.,`status: done` only if test_ref exists and tests pass                                                                                                                                                          | Partial today; reviewer enforces manually                                             |
-| Cross-link validation `[PLANNED v1.1]`          | All `[[wiki-links]]` and `spec_ref:`/`design_ref:` resolve                                                                                                                                                      | Partial today; reviewer enforces manually                                             |
-| KRISA staleness `[PLANNED v1.1]`                | If REQ changed, flag affected Word sections                                                                                                                                                                           | Stub in Appendix A.2; manual BA check today                                           |
+| Frontmatter status transitions `[PLANNED v1.2]` | E.g.,`status: done` only if test_ref exists and tests pass                                                                                                                                                          | Partial today; reviewer enforces manually                                             |
+| Cross-link validation `[PLANNED v1.2]`          | All `[[wiki-links]]` and `spec_ref:`/`design_ref:` resolve                                                                                                                                                      | Partial today; reviewer enforces manually                                             |
+| KRISA staleness `[PLANNED v1.2]`                | If REQ changed, flag affected Word sections                                                                                                                                                                           | Stub in Appendix A.2; manual BA check today                                           |
 
 ### 6.3 Human gates
 
@@ -1367,7 +1429,7 @@ Trust model: developer discipline. The hook forces the ID in the commit, but doe
 - **Sprint-close walkthrough (retro):** every task marked `done` must have `pr:` URL filled. Empty `pr:` = treat as not done.
 - **REQ → done requires human:** REQ status flips to `done` only after BA verifies tests pass and client signs off. Never auto-flipped.
 
-**Known v1.0 gap — `last_updated` freshness is not validator-enforced.** The validator (A.1) checks that `last_updated` is present and non-empty, but does NOT check that the value reflects the most recent actual edit. A dev could change task fields without bumping `last_updated`; the validator passes and the dashboard's stale-task detection misreads the task as fresh. This gap is closed by the PLANNED v1.1 auto-close-TASK script (A.5), which bumps `last_updated` automatically on PR merge. Until then: discipline + PR checklist + Friday spot-check are the safety net. Document this gap to client honestly during steering committees if asked.
+**Known v1.0 gap — `last_updated` freshness is not validator-enforced.** The validator (A.1) checks that `last_updated` is present and non-empty, but does NOT check that the value reflects the most recent actual edit. A dev could change task fields without bumping `last_updated`; the validator passes and the dashboard's stale-task detection misreads the task as fresh. This gap is closed by the PLANNED v1.2 auto-close-TASK script (A.5), which bumps `last_updated` automatically on PR merge. Until then: discipline + PR checklist + Friday spot-check are the safety net. Document this gap to client honestly during steering committees if asked.
 
 **Why manual is acceptable at Censof scale:**
 
@@ -1597,7 +1659,7 @@ CI validator (`scripts/validate_frontmatter.py`) reads the MD type from the file
 
 ### 7.4 Dashboard refresh mechanism
 
-Three distinct layers — keep them straight (Layers 1 + 2 are v1.0; Layer 3 is `[PLANNED v1.1]`):
+Three distinct layers — keep them straight (Layers 1 + 2 are v1.0; Layer 3 is `[PLANNED v1.2]`):
 
 **Layer 1 — Live Dataview rendering (v1.0, today).** `dashboard/dashboard.md` is a hand-authored file containing inline Dataview query blocks (see §7.2 Tier 1 example). The file content itself does not change between renders — Obsidian's Dataview plugin re-evaluates the queries every time the file is opened and renders fresh results based on the current state of all REQ/Task/FB MDs. There is no scheduled script overwriting `dashboard.md`; if you edit a query, you save the file like any normal MD edit.
 
@@ -1609,7 +1671,7 @@ Either style works. Censof default: inline in `dashboard.md` for the primary vie
 
 **Layer 2 — Client-facing HTML snapshot (v1.0, manual weekly).** Every Friday, the BA does an Obsidian "Export to HTML" (one click) on `dashboard.md` (and `velocity.md`, `sprint-board.md` as needed). The exported HTML is dropped into `dashboard/exports/` (Tier C, gitignored or auto-generated) and synced via OneDrive to a read-only client folder. Client opens `index.html` in any browser; queries no longer render live but the values reflect the snapshot moment. This is the "frozen dashboard" the client sees in steering committees.
 
-**Layer 3 — Historical snapshots `[PLANNED v1.1]`.** A nightly script (not yet implemented) would write `dashboard/snapshots/dashboard-YYYY-MM-DD.md` capturing computed metric values for that day — enabling trend analysis ("how did velocity track over the last 12 weeks?"). Until the script lands, trend data is read from Dataview live (`file.mtime` and frontmatter dates already give most of what's needed). The script, when built, would be added to Appendix A as a sibling of `regen_indexes.py` and run via nightly cron on the VPS, not via GitHub Actions.
+**Layer 3 — Historical snapshots `[PLANNED v1.2]`.** A nightly script (not yet implemented) would write `dashboard/snapshots/dashboard-YYYY-MM-DD.md` capturing computed metric values for that day — enabling trend analysis ("how did velocity track over the last 12 weeks?"). Until the script lands, trend data is read from Dataview live (`file.mtime` and frontmatter dates already give most of what's needed). The script, when built, would be added to Appendix A as a sibling of `regen_indexes.py` and run via nightly cron on the VPS, not via GitHub Actions.
 
 **Important:** No automation in v1.0 overwrites `dashboard.md`. Manual edits to it are preserved. The standard stack contains no scheduled script that mutates dashboard files — refresh happens via Dataview re-rendering when Obsidian opens the file.
 
@@ -3193,7 +3255,7 @@ if __name__ == "__main__":
     sys.exit(1 if all_errors else 0)
 ```
 
-#### A.2 KRISA staleness detector `[PLANNED v1.1]`
+#### A.2 KRISA staleness detector `[PLANNED v1.2]`
 
 ```python
 # scripts/detect_krisa_staleness.py
@@ -3530,7 +3592,7 @@ In CI (`.github/workflows/ci.yml`):
     fi
 ```
 
-#### A.5 Auto-close TASK on PR merge `[PLANNED v1.1]`
+#### A.5 Auto-close TASK on PR merge `[PLANNED v1.2]`
 
 ```python
 # scripts/close_task_on_pr_merge.py
@@ -3559,7 +3621,7 @@ In CI (`.github/workflows/ci.yml`):
 # - Multiple PRs cite same TASK (e.g., follow-up fix) → second one logs warning, doesn't re-flip.
 ```
 
-#### A.6 Build REQ ↔ test coverage map `[PLANNED v1.1]`
+#### A.6 Build REQ ↔ test coverage map `[PLANNED v1.2]`
 
 ```python
 # scripts/build_test_coverage_map.py
@@ -3584,7 +3646,7 @@ In CI (`.github/workflows/ci.yml`):
 # - Health-score component test_coverage_by_req
 ```
 
-#### A.7 REQ readiness check `[PLANNED v1.1]`
+#### A.7 REQ readiness check `[PLANNED v1.2]`
 
 ```python
 # scripts/check_req_readiness.py
@@ -3611,7 +3673,7 @@ In CI (`.github/workflows/ci.yml`):
 # Note: "ready-for-acceptance" already in STATUS_VALUES["requirements"] in validate_frontmatter.py (A.1).
 ```
 
-#### A.8 Design ↔ code drift detector `[PLANNED v1.1]`
+#### A.8 Design ↔ code drift detector `[PLANNED v1.2]`
 
 ```python
 # scripts/design_to_code_drift.py
@@ -3734,7 +3796,7 @@ project-x/
 │   │   ├── sprint-board.md
 │   │   ├── ops-daily.md                # Daily Claude-generated ops summary
 │   │   ├── exports/                    # [Tier C — generated, exempt] HTML snapshots for client
-│   │   ├── snapshots/                  # [Tier C — generated, exempt] [PLANNED v1.1] Nightly metric snapshots
+│   │   ├── snapshots/                  # [Tier C — generated, exempt] [PLANNED v1.2] Nightly metric snapshots
 │   │   └── queries/
 │   │       ├── _index.md
 │   │       └── _prompts.md
@@ -3866,6 +3928,6 @@ Contributors: anyone via PR.
 
 ---
 
-**End of Playbook v1.0**
+**End of Playbook v1.1**
 
 > "Process is the scar tissue of past failures. This playbook is Censof's scar tissue — keep adding to it."
