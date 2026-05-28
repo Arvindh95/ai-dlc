@@ -13,11 +13,11 @@ ai_behavior_hint: |
 Read `_index.md` first, then match the user's request to one of the OPs below by trigger phrase. If no OP matches, do NOT improvise — escalate.
 
 ## OP-1: Create new requirement from raw input
-- **Trigger phrases:** "create requirement from raw input", "process workshop transcript", "ingest email into REQs"
+- **Trigger phrases:** "create requirement from raw input", "process workshop transcript", "ingest email into REQs", "extract REQs from inventory"
 - **Canonical prompt:** `../prompts/ingest-raw-input.md`
-- **Inputs:** Source file(s) in `../raw-inputs/`
+- **Inputs:** Source file(s) in `../raw-inputs/` — natural-language inputs (workshops/emails/docs) OR a filled Inventory section in a `../raw-inputs/legacy-system/` sidecar MD
 - **Output:** New `REQ-XXX-*.md` files with `status: draft`
-- **Inline summary:** Read source, generate one draft REQ per atomic requirement, cite source line ranges, write [TBD] for ambiguous parts, do not invent ACs.
+- **Inline summary:** Read source, generate one draft REQ per atomic requirement, cite source line ranges, write [TBD] for ambiguous parts, do not invent ACs. For migration inputs, the source is the **Inventory** section (not raw code) — each REQ cites both the inventory item and the original artifact line range. Legacy artifacts must be inventoried first (`../raw-inputs/legacy-system/_prompts.md` OP-2) before REQ extraction.
 
 ## OP-2: Refine acceptance criteria
 - **Trigger phrases:** "improve AC for REQ-X", "make AC testable"

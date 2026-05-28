@@ -3,7 +3,7 @@ folder: prompts
 purpose: "Versioned Claude prompts used by AI operations across folders."
 owner: "Tech Lead"
 file_naming: "<op-name>.md (e.g., ingest-raw-input.md, refine-ac.md). Version in frontmatter."
-last_updated: 2026-05-26
+last_updated: 2026-05-28
 ai_navigation_hint: |
   Read this folder to find canonical prompts referenced by `_prompts.md` OPs. Never inline a prompt — link here.
 ---
@@ -52,16 +52,17 @@ _(auto-generated below — do not edit by hand)_
 | File | ID | Title | Status | Owner | Updated |
 |------|----|----|--------|-------|---------|
 | [CHANGELOG.md](CHANGELOG.md) | - | CHANGELOG | - | - | - |
-| [create-design.md](create-design.md) | PROMPT-05 | create-design | active | - | 2026-05-26 |
+| [create-design.md](create-design.md) | PROMPT-05 | create-design | active | - | 2026-05-28 |
 | [create-spec.md](create-spec.md) | PROMPT-04 | create-spec | active | - | 2026-05-26 |
-| [create-tasks-from-req.md](create-tasks-from-req.md) | PROMPT-07 | create-tasks-from-req | active | - | 2026-05-26 |
+| [create-tasks-from-req.md](create-tasks-from-req.md) | PROMPT-07 | create-tasks-from-req | active | - | 2026-05-28 |
 | [fill-srs-section.md](fill-srs-section.md) | PROMPT-11 | fill-srs-section | active | - | 2026-05-26 |
 | [ingest-raw-input.md](ingest-raw-input.md) | PROMPT-01 | ingest-raw-input | active | - | 2026-05-26 |
-| [kickoff.md](kickoff.md) | PROMPT-00 | kickoff | active | - | 2026-05-26 |
+| [kickoff.md](kickoff.md) | PROMPT-00 | kickoff | active | - | 2026-05-28 |
 | [krisa-consistency.md](krisa-consistency.md) | PROMPT-12 | krisa-consistency | active | - | 2026-05-26 |
+| [next-steps.md](next-steps.md) | PROMPT-13 | next-steps | active | - | 2026-05-28 |
 | [postmortem.md](postmortem.md) | PROMPT-10 | postmortem | active | - | 2026-05-26 |
 | [refine-ac.md](refine-ac.md) | PROMPT-02 | refine-ac | active | - | 2026-05-26 |
-| [req-check.md](req-check.md) | PROMPT-03 | req-check | active | - | 2026-05-26 |
+| [req-check.md](req-check.md) | PROMPT-03 | req-check | active | - | 2026-05-28 |
 | [retro-draft.md](retro-draft.md) | PROMPT-09 | retro-draft | active | - | 2026-05-26 |
-| [sprint-plan.md](sprint-plan.md) | PROMPT-06 | sprint-plan | active | - | 2026-05-26 |
+| [sprint-plan.md](sprint-plan.md) | PROMPT-06 | sprint-plan | active | - | 2026-05-28 |
 | [triage-feedback.md](triage-feedback.md) | PROMPT-08 | triage-feedback | active | - | 2026-05-26 |

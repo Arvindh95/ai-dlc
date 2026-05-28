@@ -1,9 +1,9 @@
 ---
 id: PROMPT-06
 name: Plan a new sprint
-version: 0.1.0
+version: 0.2.0
 status: active
-last_updated: 2026-05-26
+last_updated: 2026-05-28
 used_by:
   - tasks/_prompts.md OP-1
 ---
@@ -20,8 +20,10 @@ Select REQs from backlog for the next sprint within team capacity, generate task
 - Backlog priorities
 
 ## Output
-- New `tasks/sprint-NN/` folder with `_index.md` + `_prompts.md` (copy from sprint-01 templates if missing)
-- Sprint goals + dates filled in `_index.md`
+- New `tasks/sprint-NN/` folder (copied from `tasks/sprint-template/`) with `_index.md` + `_prompts.md`
+- New `feedback/sprint-NN/` folder (copied from `feedback/sprint-template/`) with `_index.md` + `_prompts.md`
+- All `{{SPRINT_NN}}` tokens in the 4 copied files replaced with the actual sprint id
+- Sprint goals + dates filled in `tasks/sprint-NN/_index.md`
 - TASK files generated per chosen REQ
 
 ## Prompt body
@@ -37,8 +39,14 @@ You are planning sprint-NN.
    total hours. Add REQ to sprint if cumulative_hours + req_hours <= capacity_hours.
 6. Stop when capacity reached or backlog exhausted.
 
-Create tasks/sprint-NN/_index.md (if missing) by cloning sprint-01 template, then:
-- Set sprint dates
+Scaffold the sprint folders:
+- Copy tasks/sprint-template/ → tasks/sprint-NN/
+- Copy feedback/sprint-template/ → feedback/sprint-NN/
+- In all 4 copied files, replace every {{SPRINT_NN}} token with the actual id (e.g. sprint-02),
+  update folder: frontmatter + last_updated, and remove the "do NOT add real entries here" hint.
+
+Then in tasks/sprint-NN/_index.md:
+- Set sprint dates (derive from 00-overview/cadence.md sprint length if not given)
 - Set sprint goals (one bullet per chosen REQ)
 - Set planned REQs list
 

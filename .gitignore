@@ -6,6 +6,7 @@ cache/
 tmp/
 
 # Tool-managed
+.claude/
 .obsidian/workspace*
 .obsidian/cache
 node_modules/

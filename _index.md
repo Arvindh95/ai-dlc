@@ -3,13 +3,13 @@ folder: ROOT
 purpose: AI-DLC requirements repo
 owner: PM
 file_naming: heterogeneous (root holds README + _index + _prompts only; see folder map below)
-last_updated: 2026-05-26
+last_updated: 2026-05-28
 project_id: TBD-set-at-kickoff
 client: TBD-set-at-kickoff
 contract_start: TBD-set-at-kickoff
 contract_end: TBD-set-at-kickoff
 current_sprint: sprint-01
-playbook_version: "1.0"
+playbook_version: "1.1"
 lightweight_mode: false
 ai_navigation_hint: |
   Start here. Read folder map below, then read the target folder's _index.md
@@ -47,6 +47,7 @@ ai_navigation_hint: |
 | `change-requests/` | CRs against approved REQs | `change-requests/_index.md` |
 | `decisions/` | Cross-cutting non-architecture decisions | `decisions/_index.md` |
 | `incidents/` | Postmortems | `incidents/_index.md` |
+| `risks/` | Project risk register (RISK-NNN records) | `risks/_index.md` |
 | `prompts/` | Versioned Claude prompts | `prompts/_index.md` |
 | `deliverables/` | KRISA D01–D18 Word docs | `deliverables/_index.md` |
 | `raw-inputs/` | Workshop transcripts, client emails, source docs | `raw-inputs/_index.md` |

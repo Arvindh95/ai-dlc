@@ -20,10 +20,11 @@ heterogeneous (workshops/, client-emails/, client-docs/ subfolders with date-pre
 | Field | Type | Values |
 |-------|------|--------|
 | id | string | RAW-NNN |
-| source_type | enum | workshop, email, doc, call, chat |
+| source_type | enum | workshop, email, doc, call, chat, code, schema, api-spec, db-erd, ui-mockup, user-manual |
 | source_date | date | ISO 8601 |
 | captured_by | string | Name |
 | status | enum | unprocessed, partially-processed, fully-processed, superseded |
+| artifact_ref | string | Original filename (legacy-system sidecars only) |
 | generated_reqs | list[string] | REQ-IDs (required when partially/fully-processed) |
 
 
@@ -35,10 +36,12 @@ _(auto-generated below — do not edit by hand)_
 - `workshops/`
 - `client-emails/`
 - `client-docs/`
+- `legacy-system/` (migration projects — code, schema, API specs)
 
 ## Common questions
 - **Where do I dump a transcript?** → `workshops/`
 - **Where do client emails go?** → `client-emails/`
+- **Where do I dump old code / SQL schema?** → `legacy-system/` (two-step: inventory then extract)
 - **Has this input been processed?** → frontmatter `status`
 
 

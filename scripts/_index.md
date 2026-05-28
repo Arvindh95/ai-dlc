@@ -3,7 +3,7 @@ folder: scripts
 purpose: "CI scripts: frontmatter validator + Tier A/B index/prompts regenerator."
 owner: "Tech Lead"
 file_naming: "<purpose>.py (e.g., validate_frontmatter.py, regen_indexes.py)"
-last_updated: 2026-05-26
+last_updated: 2026-05-28
 ai_navigation_hint: |
   Tier B — _index.md required, _prompts.md optional. Run scripts locally before commit.
 ---
@@ -41,5 +41,5 @@ _(auto-generated below — do not edit by hand)_
 
 | File | ID | Title | Status | Owner | Updated |
 |------|----|----|--------|-------|---------|
-| [regen_indexes.py](regen_indexes.py) | - | regen_indexes | - | - | 2026-05-26 |
-| [validate_frontmatter.py](validate_frontmatter.py) | - | validate_frontmatter | - | - | 2026-05-26 |
+| [regen_indexes.py](regen_indexes.py) | - | regen_indexes | - | - | 2026-05-28 |
+| [validate_frontmatter.py](validate_frontmatter.py) | - | validate_frontmatter | - | - | 2026-05-28 |

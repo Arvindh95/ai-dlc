@@ -3,7 +3,7 @@ folder: 00-overview
 purpose: "Project meta: vision, scope, stakeholders, teams, security, AI config"
 owner: "PM"
 file_naming: "heterogeneous (one MD per topic: vision.md, scope.md, etc.)"
-last_updated: 2026-05-26
+last_updated: 2026-05-28
 ai_navigation_hint: |
   Read this folder before any other folder. Vision + teams + ai-config set the rules for the whole repo.
 ---
@@ -31,6 +31,9 @@ _(auto-generated below — do not edit by hand)_
 - **Who's the BA / tech lead?** → `teams.md`
 - **Which Claude model?** → `ai-config.md`
 - **PDPA classification?** → `security.md`
+- **Sprint length / ceremony schedule?** → `cadence.md`
+- **Tech stack / code repo URL / env URLs?** → `tech.md`
+- **Project risks?** → `../risks/`
 
 
 ## Maintenance
@@ -44,9 +47,11 @@ _(auto-generated below — do not edit by hand)_
 | File | ID | Title | Status | Owner | Updated |
 |------|----|----|--------|-------|---------|
 | [ai-config.md](ai-config.md) | - | ai-config | - | - | - |
+| [cadence.md](cadence.md) | - | cadence | - | - | - |
 | [glossary.md](glossary.md) | - | glossary | - | - | - |
 | [scope.md](scope.md) | - | scope | - | - | - |
 | [security.md](security.md) | - | security | - | - | - |
 | [stakeholders.md](stakeholders.md) | - | stakeholders | - | - | - |
 | [teams.md](teams.md) | - | teams | - | - | - |
+| [tech.md](tech.md) | - | tech | - | - | - |
 | [vision.md](vision.md) | - | vision | - | - | - |
